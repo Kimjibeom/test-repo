@@ -764,7 +764,7 @@ service:
   ## -- Single service is using `MixedProtocolLBService` feature gate.
   ## -- When set to false, it will create two Service, one for TCP and one for UDP.
   single: true
-  type: LoadBalancer
+  type: NodePort
   # -- Additional annotations applied to both TCP and UDP services (e.g. for cloud provider specific config)
   annotations: {}
   # -- Additional annotations for TCP service only
@@ -775,7 +775,14 @@ service:
   labels: {}
   # -- Additional entries here will be added to the service spec.
   # -- Cannot contain type, selector or ports entries.
-  spec: {}
+  spec:
+    ports:
+      - port: 80
+        targetPort: 80
+        nodePort: 32080
+      - port: 443
+        targetPort: 443
+        nodePort: 32443
   # externalTrafficPolicy: Cluster
   # loadBalancerIP: "1.2.3.4"
   # clusterIP: "2.3.4.5"
