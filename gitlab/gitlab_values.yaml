@@ -80,7 +80,7 @@ global:
     configureCertmanager: false       # cert-manager 사용 안 함
     useNewIngressForCerts: false
     provider: traefik                 # Traefik ingress controller 사용
-    class: "traefik"                  # Traefik ingressClassName 명시
+    # class: "traefik"                  # Traefik ingressClassName 명시
     annotations:
       kubernetes.io/ingress.class: traefik
     enabled: true
