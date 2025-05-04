@@ -48,7 +48,7 @@ global:
     labels: {}
 
   ## https://docs.gitlab.com/charts/installation/deployment#deploy-the-community-edition
-  edition: ee
+  edition: ce
 
   ## https://docs.gitlab.com/charts/charts/globals#gitlab-version
   gitlabVersion: "17.11.1"
@@ -58,33 +58,34 @@ global:
     create: false
     links: []
     allowClusterRoles: true
-  ## https://docs.gitlab.com/charts/charts/globals#configure-host-settings
+
   hosts:
-    domain: example.com
-    hostSuffix:
-    https: true
-    externalIP:
-    ssh:
+    domain: gitlab.local              # /etc/hosts에 등록할 도메인
+    hostSuffix: ""
+    https: false                      # HTTPS 비활성화
+    externalIP: ""                    # 필요 시 MetalLB IP 할당
+    ssh:                              # SSH 접속은 일반적으로 22번 포트 사용
+      port: 22
     gitlab: {}
     minio: {}
     registry: {}
-    tls: {}
+    tls:                              # TLS 관련 비활성화
+      enabled: false
     smartcard: {}
     kas: {}
     pages: {}
 
-  ## https://docs.gitlab.com/charts/charts/globals#configure-ingress-settings
   ingress:
     apiVersion: ""
-    configureCertmanager: true
+    configureCertmanager: false       # cert-manager 사용 안 함
     useNewIngressForCerts: false
-    provider: nginx
-    # class:
-    annotations: {}
+    provider: traefik                 # Traefik ingress controller 사용
+    class: "traefik"                  # Traefik ingressClassName 명시
+    annotations:
+      kubernetes.io/ingress.class: traefik
     enabled: true
-    tls: {}
-    #   enabled: true
-    #   secretName:
+    tls:
+      enabled: false                  # TLS 비활성화
     path: /
     pathType: Prefix
 
