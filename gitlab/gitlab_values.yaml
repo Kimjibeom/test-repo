@@ -81,8 +81,7 @@ global:
     useNewIngressForCerts: false
     provider: traefik                 # Traefik ingress controller 사용
     # class: "traefik"                  # Traefik ingressClassName 명시
-    annotations:
-      kubernetes.io/ingress.class: traefik
+    ingressClassName: traefik
     enabled: true
     tls:
       enabled: false                  # TLS 비활성화
